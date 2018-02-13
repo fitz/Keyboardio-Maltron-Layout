@@ -16,6 +16,8 @@
 // The Kaleidoscope core
 #include "Kaleidoscope.h"
 
+#include <Kaleidoscope-ShapeShifter.h>
+
 // Support for keys that move the mouse
 #include "Kaleidoscope-MouseKeys.h"
 
@@ -75,7 +77,6 @@ enum { MACRO_VERSION_INFO,
      };
 
 
-
 /** The Model 01's key layouts are defined as 'keymaps'. By default, there are three
   * keymaps: The standard QWERTY keymap, the "Function layer" keymap and the "Numpad"
   * keymap.
@@ -128,6 +129,77 @@ enum { QWERTY, NUMPAD, FUNCTION }; // layers
 const Key keymaps[][ROWS][COLS] PROGMEM = {
 
   [QWERTY] = KEYMAP_STACKED
+  (Key_Escape,      Key_1, Key_2, Key_3, Key_4, Key_5, Key_LEDEffectNext,
+   Key_Slash,       Key_Q, Key_P, Key_Y, Key_C, Key_B, Key_Tab,
+   Key_PageUp,      Key_A, Key_N, Key_I, Key_S, Key_F,
+   Key_PageDown,    Key_Comma, Key_Period, Key_J, Key_G, Key_Quote, Key_LeftGui,
+   Key_LeftControl, Key_Backspace, Key_E, Key_LeftShift,
+   ShiftToLayer(FUNCTION),
+
+   M(MACRO_ANY),  Key_6, Key_7, Key_8,     Key_9,         Key_0,         Key_Backtick,
+   ___,           Key_V, Key_M, Key_U,     Key_Z,         Key_L,         Key_Semicolon,
+                  Key_D, Key_T, Key_H,     Key_O,         Key_R, Key_Quote,
+   Key_LeftAlt,  LSHIFT(Key_Minus), Key_W, Key_K, Key_Minus,    Key_X,     Key_Minus,
+   Key_RightShift, Key_Enter, Key_Spacebar, Key_RightControl,
+   ShiftToLayer(FUNCTION)),
+
+
+  [NUMPAD] =  KEYMAP_STACKED
+  (___, ___, ___, ___, ___, ___, ___,
+   ___, ___, ___, ___, ___, ___, ___,
+   ___, ___, ___, ___, ___, ___,
+   ___, ___, ___, ___, ___, ___, ___,
+   ___, ___, ___, ___,
+   ___,
+
+   M(MACRO_VERSION_INFO),  ___, Key_Keypad7, Key_Keypad8,   Key_Keypad9,        Key_KeypadSubtract, ___,
+   ___,                    ___, Key_Keypad4, Key_Keypad5,   Key_Keypad6,        Key_KeypadAdd,      ___,
+                           ___, Key_Keypad1, Key_Keypad2,   Key_Keypad3,        Key_Equals,         Key_Quote,
+   ___,                    ___, Key_Keypad0, Key_KeypadDot, Key_KeypadMultiply, Key_KeypadDivide,   Key_Enter,
+   ___, ___, ___, ___,
+   ___),
+
+  [FUNCTION] =  KEYMAP_STACKED
+  (___,      Key_F1,           Key_F2,      Key_F3,     Key_F4,        Key_F5,           XXX,
+   Key_Tab,  ___,              Key_UpArrow, ___,        Key_mouseBtnR, Key_mouseWarpEnd, Key_mouseWarpNE,
+   Key_Home, Key_LeftArrow,       Key_DownArrow, Key_RightArrow, Key_mouseBtnL, Key_mouseWarpNW,
+   Key_End,  Key_PrintScreen,  Key_Insert,  ___,        Key_mouseBtnM, Key_mouseWarpSW,  Key_mouseWarpSE,
+   ___, Key_Delete, ___, ___,
+   ___,
+
+   Consumer_ScanPreviousTrack, Key_F6,                     Key_F7,                   Key_F8,                   Key_F9,          Key_F10,          Key_F11,
+   Consumer_PlaySlashPause,    Consumer_ScanNextTrack,     Key_LeftCurlyBracket,     Key_RightCurlyBracket,    Key_LeftBracket, Key_RightBracket, Key_F12,
+                               Key_LeftArrow,              Key_DownArrow,            Key_UpArrow,              Key_RightArrow,  ___,              ___,
+   Key_PcApplication,          LSHIFT(Key_1),              LSHIFT(Key_Period),       Consumer_VolumeIncrement, ___,             Key_Backslash,    Key_Pipe,
+   ___, ___, Key_Enter, ___,
+   ___)
+
+};
+
+/*
+Key_KeypadExclamationPoint
+Consumer_VolumeDecrement
+Consumer_Mute
+Key_KeypadGreaterThan
+*/
+
+static const kaleidoscope::ShapeShifter::dictionary_t shape_shift_dictionary[] PROGMEM = {
+ {Key_1, Key_A},
+ {Key_4, Key_1},
+ {Key_NoKey, Key_NoKey},
+};
+
+
+
+
+
+
+
+/* Original layout
+
+const Key keymaps[][ROWS][COLS] PROGMEM = {
+
+  [QWERTY] = KEYMAP_STACKED
   (___,          Key_1, Key_2, Key_3, Key_4, Key_5, Key_LEDEffectNext,
    Key_Backtick, Key_Q, Key_W, Key_E, Key_R, Key_T, Key_Tab,
    Key_PageUp,   Key_A, Key_S, Key_D, Key_F, Key_G,
@@ -174,6 +246,21 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
    ___)
 
 };
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 /* Re-enable astyle's indent enforcement */
 // *INDENT-ON*
@@ -264,11 +351,14 @@ void setup() {
   // The order can be important. For example, LED effects are
   // added in the order they're listed here.
   Kaleidoscope.use(
+
+    &ShapeShifter,
+    
     // The boot greeting effect pulses the LED button for 10 seconds after the keyboard is first connected
     &BootGreetingEffect,
 
     // The hardware test mode, which can be invoked by tapping Prog, LED and the left Fn button at the same time.
-    &TestMode,
+  //  &TestMode,
 
     // LEDControl provides support for other LED modes
     &LEDControl,
@@ -310,6 +400,7 @@ void setup() {
 
     // The MouseKeys plugin lets you add keys to your keymap which move the mouse.
     &MouseKeys
+
   );
 
   // While we hope to improve this in the future, the NumPad plugin
@@ -333,6 +424,10 @@ void setup() {
   // This avoids over-taxing devices that don't have a lot of power to share
   // with USB devices
   LEDOff.activate();
+
+  ShapeShifter.dictionary = shape_shift_dictionary;
+
+  
 }
 
 /** loop is the second of the standard Arduino sketch functions.
