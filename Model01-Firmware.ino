@@ -129,18 +129,18 @@ enum { QWERTY, NUMPAD, FUNCTION }; // layers
 const Key keymaps[][ROWS][COLS] PROGMEM = {
 
   [QWERTY] = KEYMAP_STACKED
-  (Key_Escape,      Key_1, Key_2, Key_3, Key_4, Key_5, Key_LEDEffectNext,
-   Key_Slash,       Key_Q, Key_P, Key_Y, Key_C, Key_B, Key_Tab,
-   Key_PageUp,      Key_A, Key_N, Key_I, Key_S, Key_F,
-   Key_PageDown,    Key_Comma, Key_Period, Key_J, Key_G, Key_Quote, Key_LeftGui,
-   Key_LeftControl, Key_E, Key_Backspace, Key_LeftShift,
+  (Key_Escape,      Key_1,     Key_2,         Key_3,         Key_4, Key_5,     Key_LEDEffectNext,
+   Key_Slash,       Key_Q,     Key_P,         Key_Y,         Key_C, Key_B,     Key_Tab,
+   Key_PageUp,      Key_A,     Key_N,         Key_I,         Key_S, Key_F,
+   Key_PageDown,    Key_Comma, Key_Period,    Key_J,         Key_G, Key_Quote, Key_LeftGui,
+   Key_LeftControl, Key_E,     Key_Backspace, Key_LeftShift,
    ShiftToLayer(FUNCTION),
 
-   M(MACRO_ANY),  Key_6, Key_7, Key_8,     Key_9,         Key_0,         Key_Backtick,
-   ___,           Key_V, Key_M, Key_U,     Key_Z,         Key_L,         Key_Semicolon,
-                  Key_D, Key_T, Key_H,     Key_O,         Key_R, Key_Quote,
-   Key_LeftAlt,  LSHIFT(Key_Minus), Key_W, Key_K, Key_Minus,    Key_X,     Key_Minus,
-   Key_RightShift, Key_Enter, Key_Spacebar, Key_RightControl,
+   M(MACRO_ANY),   Key_6,             Key_7,        Key_8,            Key_9,            Key_0, Key_Backtick,
+   ___,            Key_V,             Key_M,        Key_U,            Key_Z,            Key_L, Key_Semicolon,
+                   Key_D,             Key_T,        Key_H,            Key_O,            Key_R, Key_Quote,
+   Key_LeftAlt,    LSHIFT(Key_Minus), Key_W,        Key_K,            Key_Minus,        Key_X, Key_Minus,
+   Key_RightShift, Key_Enter,         Key_Spacebar, Key_RightControl,
    ShiftToLayer(FUNCTION)),
 
 
@@ -184,9 +184,15 @@ Key_KeypadGreaterThan
 */
 
 static const kaleidoscope::ShapeShifter::dictionary_t shape_shift_dictionary[] PROGMEM = {
- {Key_1, Key_A},
- {Key_4, Key_1},
- {Key_NoKey, Key_NoKey},
+   // Adapt shifted numbers to Malt L98 layout
+   {Key_1, Key_Equals},
+   {Key_2, Key_6},
+   {Key_5, Key_9},
+   {Key_6, Key_0},
+   {Key_8, Key_2},
+   {Key_9, Key_5},
+   {Key_0, Key_Equals}, // TODO Need to make this a macro probably
+   {Key_NoKey, Key_NoKey},
 };
 
 
