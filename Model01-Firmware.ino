@@ -167,11 +167,11 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
    ___,      ___,           Key_Delete,    ___,
    ___, 
 
-   ___, Key_F6,                     Key_F7,                   Key_F8,                   Key_F9,          Key_F10,          Key_F11,
-   ___,    ___,     Key_RightCurlyBracket,     ___,    Key_LeftBracket, Key_RightBracket, Key_F12,
-                               Key_LeftArrow,              Key_DownArrow,            Key_UpArrow,              Key_RightArrow,  ___,              Key_PrintScreen,
-   Key_PcApplication,          LSHIFT(Key_1),              LSHIFT(Key_Period),       Consumer_VolumeIncrement, ___,             Key_Backslash,    Key_Pipe,
-   ___, ___, Key_Enter, ___,
+   ___, Key_F6,        Key_F7,                Key_F8,                   Key_F9,        Key_F10,      Key_F11,
+   ___, ___,           Key_RightCurlyBracket, Consumer_Mute,            ___,           ___,          Key_F12,
+        ___,           ___,                   Consumer_VolumeIncrement, ___,           Key_Backtick, Key_PrintScreen,
+   ___, LSHIFT(Key_1), Key_RightBracket,      Consumer_VolumeDecrement, ___,           Key_Slash,    Key_Insert,
+   ___, Key_Enter,     ___,                   ___,
    ___)
 
 };
