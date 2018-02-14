@@ -160,16 +160,16 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
    ___),
 
   [FUNCTION] =  KEYMAP_STACKED
-  (___,      Key_F1,           Key_F2,      Key_F3,     Key_F4,        Key_F5,           XXX,
-   Key_Tab,  ___,              Key_UpArrow, ___,        Key_mouseBtnR, Key_mouseWarpEnd, Key_mouseWarpNE,
-   Key_Home, Key_LeftArrow,       Key_DownArrow, Key_RightArrow, Key_mouseBtnL, Key_mouseWarpNW,
-   Key_End,  Key_PrintScreen,  Key_Insert,  ___,        Key_mouseBtnM, Key_mouseWarpSW,  Key_mouseWarpSE,
-   ___, Key_Delete, ___, ___,
-   ___,
+  (___,      Key_F1,        Key_F2,        Key_F3,        Key_F4,               Key_F5,        XXX,
+   ___,      ___,           ___,           Key_UpArrow,   Key_LeftCurlyBracket, ___,           ___,
+   Key_Home, Key_Pipe,      Key_LeftArrow, Key_DownArrow, Key_RightArrow,       ___,
+   Key_End,  Key_Backslash, ___,           ___,           Key_LeftBracket,      LSHIFT(Key_8), ___,
+   ___,      ___,           Key_Delete,    ___,
+   ___, 
 
-   Consumer_ScanPreviousTrack, Key_F6,                     Key_F7,                   Key_F8,                   Key_F9,          Key_F10,          Key_F11,
-   Consumer_PlaySlashPause,    Consumer_ScanNextTrack,     Key_LeftCurlyBracket,     Key_RightCurlyBracket,    Key_LeftBracket, Key_RightBracket, Key_F12,
-                               Key_LeftArrow,              Key_DownArrow,            Key_UpArrow,              Key_RightArrow,  ___,              ___,
+   ___, Key_F6,                     Key_F7,                   Key_F8,                   Key_F9,          Key_F10,          Key_F11,
+   ___,    ___,     Key_RightCurlyBracket,     ___,    Key_LeftBracket, Key_RightBracket, Key_F12,
+                               Key_LeftArrow,              Key_DownArrow,            Key_UpArrow,              Key_RightArrow,  ___,              Key_PrintScreen,
    Key_PcApplication,          LSHIFT(Key_1),              LSHIFT(Key_Period),       Consumer_VolumeIncrement, ___,             Key_Backslash,    Key_Pipe,
    ___, ___, Key_Enter, ___,
    ___)
@@ -253,18 +253,6 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
 
 };
 */
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
