@@ -132,17 +132,17 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
 
   [QWERTY] = KEYMAP_STACKED
   (Key_Escape,      Key_1,     Key_2,         Key_3,         Key_4, Key_5,     Key_LEDEffectNext,
-   Key_Slash,       Key_Q,     Key_P,         Key_Y,         Key_C, Key_B,     Key_Tab,
+   Key_Slash,       Key_Q,     Key_P,         Key_Y,         Key_C, Key_B,     ___,
    Key_PageUp,      Key_A,     Key_N,         Key_I,         Key_S, Key_F,
    Key_LeftShift,    Key_Comma, Key_Period,    Key_J,         Key_G, Key_Quote, Key_LeftGui,
-   Key_LeftControl, Key_E,     Key_Backspace, Key_LeftShift,
+   Key_LeftControl, Key_E,     Key_Backspace, Key_Tab,
    ShiftToLayer(FUNCTION),
 
    M(MACRO_ANY),   Key_6,             Key_7,        Key_8,            Key_9,            Key_0, Key_Backtick,
    ___,            Key_V,             Key_M,        Key_U,            Key_Z,            Key_L, Key_Slash,
                    Key_D,             Key_T,        Key_H,            Key_O,            Key_R, Key_Semicolon,
-   Key_LeftAlt,    LSHIFT(Key_Minus), Key_W,        Key_K,            Key_Minus,        Key_X, Key_RightShift,
-   Key_RightShift, Key_Enter,         Key_Spacebar, Key_RightControl,
+   ___,    LSHIFT(Key_Minus), Key_W,        Key_K,            Key_Minus,        Key_X, Key_RightShift,
+   Key_LeftAlt, Key_Enter,         Key_Spacebar, Key_RightControl,
    ShiftToLayer(FUNCTION)),
 
 
