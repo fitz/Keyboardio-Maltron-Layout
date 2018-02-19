@@ -75,6 +75,7 @@
   */
 
 enum { MACRO_VERSION_INFO,
+       MACRO_EQUALS,
        MACRO_ANY
      };
 
@@ -192,10 +193,17 @@ static const kaleidoscope::ShapeShifter::dictionary_t shape_shift_dictionary[] P
    {Key_6, Key_0},
    {Key_8, Key_2},
    {Key_9, Key_5},
-   {Key_0, Key_Equals}, // TODO Need to make this a macro probably
+   {Key_0, M(MACRO_EQUALS)},
    {Key_NoKey, Key_NoKey},
 };
 
+/** Send an "equals" sign without holding shift down. We currently can't use ShapeShifter to map a
+ *  shifted key to an unshifted key, so this is a workaround. */
+static void equalsMacro(uint8_t keyState) {
+  if (keyToggledOn(keyState)) {
+    Macros.type(PSTR("="));
+  }
+}
 
 /** toggleLedsOnSuspendResume toggles the LEDs off when the host goes to sleep,
  * and turns them back on when it wakes up.
@@ -282,7 +290,12 @@ const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState) {
   case MACRO_ANY:
     anyKeyMacro(keyState);
     break;
+
+  case MACRO_EQUALS:
+    equalsMacro(keyState);
+    break;
   }
+
   return MACRO_NONE;
 }
 
