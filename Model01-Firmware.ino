@@ -141,10 +141,9 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
    M(MACRO_ANY),   Key_6,             Key_7,        Key_8,            Key_9,            Key_0, Key_Backtick,
    ___,            Key_V,             Key_M,        Key_U,            Key_Z,            Key_L, Key_Slash,
                    Key_D,             Key_T,        Key_H,            Key_O,            Key_R, Key_Semicolon,
-   ___,    LSHIFT(Key_Minus), Key_W,        Key_K,            Key_Minus,        Key_X, Key_RightShift,
+   ___,    LSHIFT(Key_1), Key_W,        Key_K,            Key_Minus,        Key_X, Key_RightShift,
    Key_LeftAlt, Key_Enter,         Key_Spacebar, Key_RightControl,
    ShiftToLayer(FUNCTION)),
-
 
   [NUMPAD] =  KEYMAP_STACKED
   (___, ___, ___, ___, ___, ___, ___,
