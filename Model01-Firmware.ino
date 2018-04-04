@@ -132,18 +132,18 @@ enum { QWERTY, NUMPAD, FUNCTION }; // layers
 const Key keymaps[][ROWS][COLS] PROGMEM = {
 
   [QWERTY] = KEYMAP_STACKED
-  (Key_Escape,      Key_1,     Key_2,         Key_3,         Key_4, Key_5,     Key_LEDEffectNext,
-   Key_Slash,       Key_Q,     Key_P,         Key_Y,         Key_C, Key_B,     ___,
-   Key_PageUp,      Key_A,     Key_N,         Key_I,         Key_S, Key_F,
-   Key_LeftShift,    Key_Comma, Key_Period,    Key_J,         Key_G, Key_Quote, Key_LeftGui,
-   Key_LeftControl, Key_E,     Key_Backspace, Key_Tab,
+  (Key_Escape,        Key_1,     Key_2,         Key_3,         Key_4, Key_5,     Key_LeftBracket,
+   LSHIFT(Key_8),     Key_Q,     Key_P,         Key_Y,         Key_C, Key_B,     Key_PageUp,
+   LSHIFT(Key_Slash), Key_A,     Key_N,         Key_I,         Key_S, Key_F,
+   Key_LeftShift,     Key_Comma, Key_Period,    Key_J,         Key_G, Key_Quote, Key_LeftGui,
+   Key_LeftControl,   Key_E,     Key_Backspace, Key_Tab,
    ShiftToLayer(FUNCTION),
 
-   M(MACRO_ANY),   Key_6,             Key_7,        Key_8,            Key_9,            Key_0, Key_Backtick,
-   ___,            Key_V,             Key_M,        Key_U,            Key_Z,            Key_L, Key_Slash,
-                   Key_D,             Key_T,        Key_H,            Key_O,            Key_R, Key_Semicolon,
-   ___,    LSHIFT(Key_1), Key_W,        Key_K,            Key_Minus,        Key_X, Key_RightShift,
-   Key_LeftAlt, Key_Enter,         Key_Spacebar, Key_RightControl,
+   Key_RightBracket, Key_6,         Key_7,        Key_8,            Key_9,            Key_0, Key_Backtick,
+   Key_PageDown,     Key_V,         Key_M,        Key_U,            Key_Z,            Key_L, Key_Slash,
+                     Key_D,         Key_T,        Key_H,            Key_O,            Key_R, Key_Semicolon,
+   Key_Insert,       LSHIFT(Key_1), Key_W,        Key_K,            Key_Minus,        Key_X, Key_RightShift,
+   Key_LeftAlt,      Key_Enter,     Key_Spacebar, Key_RightControl,
    ShiftToLayer(FUNCTION)),
 
   [NUMPAD] =  KEYMAP_STACKED
@@ -162,18 +162,18 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
    ___),
 
   [FUNCTION] =  KEYMAP_STACKED
-  (___,      Key_F1,        Key_F2,        Key_F3,        Key_F4,               Key_F5,        XXX,
-   ___,      ___,           ___,           Key_UpArrow,   Key_LeftCurlyBracket, ___,           ___,
-   Key_Home, Key_Pipe,      Key_LeftArrow, Key_DownArrow, Key_RightArrow,       ___,
-   Key_End,  Key_Backslash, ___,           ___,           Key_LeftBracket,      LSHIFT(Key_8), ___,
-   ___,      ___,           Key_Delete,    ___,
-   ___, 
+  (___,               Key_F1,        Key_F2,        Key_F3,        Key_F4,         Key_F5, XXX,
+   ___,               ___,           ___,           Key_UpArrow,   ___,            ___,    Key_Home,
+   ___,               Key_Pipe,      Key_LeftArrow, Key_DownArrow, Key_RightArrow, ___,
+   ___,               Key_Backslash, ___,           ___,           ___,            ___,    ___,
+   Key_LEDEffectNext, ___,           ___,           ___,
+   ___,
 
-   ___, Key_F6,        Key_F7,                Key_F8,                   Key_F9,        Key_F10,      Key_F11,
-   ___, ___,           Key_RightCurlyBracket, Consumer_Mute,            ___,           ___,          Key_F12,
-        ___,           ___,                   Consumer_VolumeIncrement, ___,           Key_Backtick, Key_PrintScreen,
-   ___, LSHIFT(Key_1), Key_RightBracket,      Consumer_VolumeDecrement, ___,           Key_Slash,    Key_Insert,
-   ___, Key_Enter,     ___,                   ___,
+   ___,     Key_F6,        Key_F7,                Key_F8,                   Key_F9,        Key_F10,      Key_F11,
+   Key_End, ___,           ___,                   Consumer_Mute,            ___,           ___,          Key_F12,
+            ___,           ___,                   Consumer_VolumeIncrement, ___,           ___,          Key_PrintScreen,
+   ___,     ___,           ___,                   Consumer_VolumeDecrement, ___,           ___,          ___,
+   ___,     ___,           ___,                   ___,
    ___)
 
 };
@@ -194,6 +194,8 @@ static const kaleidoscope::ShapeShifter::dictionary_t shape_shift_dictionary[] P
    {Key_8, Key_2},
    {Key_9, Key_5},
    {Key_0, M(MACRO_EQUALS)},
+
+   {Key_Slash, Key_Backslash},   
    {Key_NoKey, Key_NoKey},
 };
 
