@@ -75,10 +75,10 @@
   */
 
 enum { MACRO_VERSION_INFO,
+       MACRO_BACKSLASH,
        MACRO_EQUALS,
        MACRO_ANY
      };
-
 
 /** The Model 01's key layouts are defined as 'keymaps'. By default, there are three
   * keymaps: The standard QWERTY keymap, the "Function layer" keymap and the "Numpad"
@@ -194,18 +194,9 @@ static const kaleidoscope::ShapeShifter::dictionary_t shape_shift_dictionary[] P
    {Key_8, Key_2},
    {Key_9, Key_5},
    {Key_0, M(MACRO_EQUALS)},
-
-   {Key_Slash, Key_Backslash},   
+   {Key_Slash, M(MACRO_BACKSLASH)},
    {Key_NoKey, Key_NoKey},
 };
-
-/** Send an "equals" sign without holding shift down. We currently can't use ShapeShifter to map a
- *  shifted key to an unshifted key, so this is a workaround. */
-static void equalsMacro(uint8_t keyState) {
-  if (keyToggledOn(keyState)) {
-    Macros.type(PSTR("="));
-  }
-}
 
 /** toggleLedsOnSuspendResume toggles the LEDs off when the host goes to sleep,
  * and turns them back on when it wakes up.
@@ -269,7 +260,6 @@ static void anyKeyMacro(uint8_t keyState) {
     kaleidoscope::hid::pressKey(lastKey);
 }
 
-
 /** macroAction dispatches keymap events that are tied to a macro
     to that macro. It takes two uint8_t parameters.
 
@@ -294,8 +284,10 @@ const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState) {
     break;
 
   case MACRO_EQUALS:
-    equalsMacro(keyState);
-    break;
+    return MACRODOWN(I(10), U(LeftShift), U(RightShift), T(Equals));
+
+  case MACRO_BACKSLASH:
+    return MACRODOWN(I(10), U(LeftShift), U(RightShift), T(Backslash));
   }
 
   return MACRO_NONE;
