@@ -262,14 +262,23 @@ static void anyKeyMacro(uint8_t keyState) {
     kaleidoscope::hid::pressKey(lastKey);
 }
 
-static const macro_t *starPipeMacro(uint8_t keyState) {
-  bool isShifted = kaleidoscope::hid::wasModifierKeyActive(Key_LeftShift) || kaleidoscope::hid::wasModifierKeyActive(Key_RightShift);
-    if (keyIsPressed(keyState)) {
-      if (isShifted) 
-        return MACRODOWN(I(10), T(Backslash));
-      else
-        return MACRODOWN(I(10), D(LeftShift), D(RightShift),  T(8), U(LeftShift), U(RightShift));
+static void starPipeMacro(uint8_t keyState) {
+  bool isShifted = kaleidoscope::hid::wasModifierKeyActive(Key_LeftShift)
+         || kaleidoscope::hid::wasModifierKeyActive(Key_RightShift);
+  static Key lastKey;
+
+  if (keyToggledOn(keyState)) {
+    if (isShifted) {
+      lastKey.keyCode = Key_Backslash.keyCode;
     }
+    else {
+      lastKey.keyCode = Key_8.keyCode;
+      lastKey.flags = lastKey.flags | SHIFT_HELD;
+    }
+  }
+
+  if (keyIsPressed(keyState))
+    kaleidoscope::hid::pressKey(lastKey);
 }
 
 /** macroAction dispatches keymap events that are tied to a macro
@@ -299,7 +308,8 @@ const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState) {
     return MACRODOWN(I(10), U(LeftShift), U(RightShift), T(Equals));
 
   case MACRO_STAR_PIPE:
-    return starPipeMacro(keyState);
+    starPipeMacro(keyState);
+    break;
 
   case MACRO_BACKSLASH:
     return MACRODOWN(I(10), U(LeftShift), U(RightShift), T(Backslash));
