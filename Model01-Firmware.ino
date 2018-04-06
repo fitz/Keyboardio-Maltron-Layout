@@ -262,10 +262,13 @@ static void anyKeyMacro(uint8_t keyState) {
     kaleidoscope::hid::pressKey(lastKey);
 }
 
+/** Provide a key that types [*] when not shifted and [|] when shifted. Keys repeat
+    correctly when held.
+    */
 static void starPipeMacro(uint8_t keyState) {
+  static Key lastKey;
   bool isShifted = kaleidoscope::hid::wasModifierKeyActive(Key_LeftShift)
          || kaleidoscope::hid::wasModifierKeyActive(Key_RightShift);
-  static Key lastKey;
 
   if (keyToggledOn(keyState)) {
     if (isShifted) {
