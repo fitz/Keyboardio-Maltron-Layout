@@ -77,6 +77,7 @@
 enum { MACRO_VERSION_INFO,
        MACRO_BACKSLASH,
        MACRO_EQUALS,
+       MACRO_STAR_PIPE,
        MACRO_ANY
      };
 
@@ -132,11 +133,11 @@ enum { QWERTY, NUMPAD, FUNCTION }; // layers
 const Key keymaps[][ROWS][COLS] PROGMEM = {
 
   [QWERTY] = KEYMAP_STACKED
-  (Key_Escape,        Key_1,     Key_2,         Key_3,         Key_4, Key_5,     Key_LeftBracket,
-   LSHIFT(Key_8),     Key_Q,     Key_P,         Key_Y,         Key_C, Key_B,     Key_PageUp,
-   LSHIFT(Key_Slash), Key_A,     Key_N,         Key_I,         Key_S, Key_F,
-   Key_LeftShift,     Key_Comma, Key_Period,    Key_J,         Key_G, Key_Quote, Key_LeftGui,
-   Key_LeftControl,   Key_E,     Key_Backspace, Key_Tab,
+  (Key_Escape,         Key_1,     Key_2,         Key_3,         Key_4, Key_5,     Key_LeftBracket,
+   M(MACRO_STAR_PIPE), Key_Q,     Key_P,         Key_Y,         Key_C, Key_B,     Key_PageUp,
+   LSHIFT(Key_Slash),  Key_A,     Key_N,         Key_I,         Key_S, Key_F,
+   Key_LeftShift,      Key_Comma, Key_Period,    Key_J,         Key_G, Key_Quote, Key_LeftGui,
+   Key_LeftControl,    Key_E,     Key_Backspace, Key_Tab,
    ShiftToLayer(FUNCTION),
 
    Key_RightBracket, Key_6,         Key_7,        Key_8,            Key_9,            Key_0, Key_Backtick,
@@ -194,6 +195,7 @@ static const kaleidoscope::ShapeShifter::dictionary_t shape_shift_dictionary[] P
    {Key_8, Key_2},
    {Key_9, Key_5},
    {Key_0, M(MACRO_EQUALS)},
+
    {Key_Slash, M(MACRO_BACKSLASH)},
    {Key_NoKey, Key_NoKey},
 };
@@ -260,6 +262,16 @@ static void anyKeyMacro(uint8_t keyState) {
     kaleidoscope::hid::pressKey(lastKey);
 }
 
+static const macro_t *starPipeMacro(uint8_t keyState) {
+  bool isShifted = kaleidoscope::hid::wasModifierKeyActive(Key_LeftShift) || kaleidoscope::hid::wasModifierKeyActive(Key_RightShift);
+    if (keyIsPressed(keyState)) {
+      if (isShifted) 
+        return MACRODOWN(I(10), T(Backslash));
+      else
+        return MACRODOWN(I(10), D(LeftShift), D(RightShift),  T(8), U(LeftShift), U(RightShift));
+    }
+}
+
 /** macroAction dispatches keymap events that are tied to a macro
     to that macro. It takes two uint8_t parameters.
 
@@ -286,14 +298,16 @@ const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState) {
   case MACRO_EQUALS:
     return MACRODOWN(I(10), U(LeftShift), U(RightShift), T(Equals));
 
+  case MACRO_STAR_PIPE:
+    return starPipeMacro(keyState);
+
   case MACRO_BACKSLASH:
     return MACRODOWN(I(10), U(LeftShift), U(RightShift), T(Backslash));
+
   }
 
   return MACRO_NONE;
 }
-
-
 
 // These 'solid' color effect definitions define a rainbow of
 // LED color modes calibrated to draw 500mA or less on the
