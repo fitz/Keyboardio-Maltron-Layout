@@ -17,6 +17,7 @@
 #include "Kaleidoscope.h"
 
 #include <Kaleidoscope-ShapeShifter.h>
+#include <Kaleidoscope-SpaceCadet.h>
 
 // Support for keys that move the mouse
 #include "Kaleidoscope-MouseKeys.h"
@@ -322,6 +323,7 @@ const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState) {
   return MACRO_NONE;
 }
 
+
 // These 'solid' color effect definitions define a rainbow of
 // LED color modes calibrated to draw 500mA or less on the
 // Keyboardio Model 01.
@@ -352,6 +354,8 @@ void setup() {
   Kaleidoscope.use(
 
     &ShapeShifter,
+    &SpaceCadet,
+
     
     // The boot greeting effect pulses the LED button for 10 seconds after the keyboard is first connected
     &BootGreetingEffect,
@@ -430,6 +434,16 @@ void setup() {
 
   ShapeShifter.dictionary = shape_shift_dictionary;
 
+  //Set the keymap with a 250ms timeout per-key
+  //Setting is {KeyThatWasPressed, AlternativeKeyToSend, TimeoutInMS}
+  //Note: must end with the SPACECADET_MAP_END delimiter
+  static kaleidoscope::SpaceCadet::KeyBinding spacecadetmap[] = {
+    {Key_LeftShift, Key_LeftParen, 250},
+    {Key_RightShift, Key_RightParen, 250},
+    SPACECADET_MAP_END
+  };
+  //Set the map.
+  SpaceCadet.map = spacecadetmap;
   
 }
 
