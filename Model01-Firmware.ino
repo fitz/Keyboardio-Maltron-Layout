@@ -163,18 +163,18 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
    ___),
 
   [FUNCTION] =  KEYMAP_STACKED
-  (___,               Key_F1,        Key_F2,        Key_F3,        Key_F4,         Key_F5, XXX,
-   ___,               ___,           ___,           Key_UpArrow,   ___,            ___,    Key_Home,
-   ___,               Key_Pipe,      Key_LeftArrow, Key_DownArrow, Key_RightArrow, ___,
-   ___,               Key_Backslash, ___,           ___,           ___,            ___,    ___,
+  (___,               Key_F1,        Key_F2,        Key_F3,        Key_F4,                  Key_F5, XXX,
+   ___,               ___,           ___,           Key_UpArrow,   Key_LeftBracket,         ___,    Key_Home,
+   ___,               Key_Pipe,      Key_LeftArrow, Key_DownArrow, Key_RightArrow,          ___,
+   ___,               Key_Backslash, ___,           ___,           LSHIFT(Key_LeftBracket), ___,    ___,
    Key_LEDEffectNext, ___,           ___,           ___,
    ___,
 
-   ___,     Key_F6,        Key_F7,                Key_F8,                   Key_F9,        Key_F10,      Key_F11,
-   Key_End, ___,           ___,                   Consumer_Mute,            ___,           ___,          Key_F12,
-            ___,           ___,                   Consumer_VolumeIncrement, ___,           ___,          Key_PrintScreen,
-   ___,     ___,           ___,                   Consumer_VolumeDecrement, ___,           ___,          ___,
-   ___,     ___,           ___,                   ___,
+   ___,     Key_F6,        Key_F7,                   Key_F8,                   Key_F9,        Key_F10,      Key_F11,
+   Key_End, ___,           Key_RightBracket,         Consumer_Mute,            ___,           ___,          Key_F12,
+            ___,           ___,                      Consumer_VolumeIncrement, ___,           ___,          Key_PrintScreen,
+   ___,     ___,           LSHIFT(Key_RightBracket), Consumer_VolumeDecrement, ___,           ___,          ___,
+   ___,     ___,           ___,                      ___,
    ___)
 
 };
