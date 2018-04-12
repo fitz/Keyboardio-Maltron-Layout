@@ -137,15 +137,15 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
   (Key_Escape,         Key_1,     Key_2,         Key_3,         Key_4, Key_5,     Key_LeftBracket,
    M(MACRO_STAR_PIPE), Key_Q,     Key_P,         Key_Y,         Key_C, Key_B,     Key_PageUp,
    LSHIFT(Key_Slash),  Key_A,     Key_N,         Key_I,         Key_S, Key_F,
-   Key_LeftShift,      Key_Comma, Key_Period,    Key_J,         Key_G, Key_Quote, Key_LeftGui,
-   Key_LeftControl,    Key_E,     Key_Backspace, Key_Tab,
+   Key_LeftShift,      Key_Comma, Key_Period,    Key_J,         Key_G, Key_Quote, Key_LeftAlt,
+   Key_LeftControl,    Key_E,     Key_Backspace, Key_LeftGui,
    ShiftToLayer(FUNCTION),
 
    Key_RightBracket, Key_6,         Key_7,        Key_8,            Key_9,            Key_0, Key_Backtick,
    Key_PageDown,     Key_V,         Key_M,        Key_U,            Key_Z,            Key_L, Key_Slash,
                      Key_D,         Key_T,        Key_H,            Key_O,            Key_R, Key_Semicolon,
-   Key_Insert,       LSHIFT(Key_1), Key_W,        Key_K,            Key_Minus,        Key_X, Key_RightShift,
-   Key_LeftAlt,      Key_Enter,     Key_Spacebar, Key_RightControl,
+   Key_LeftAlt,       LSHIFT(Key_1), Key_W,        Key_K,            Key_Minus,        Key_X, Key_RightShift,
+   Key_LeftGui,      Key_Enter,     Key_Spacebar, Key_RightControl,
    ShiftToLayer(FUNCTION)),
 
   [NUMPAD] =  KEYMAP_STACKED
@@ -440,6 +440,7 @@ void setup() {
   static kaleidoscope::SpaceCadet::KeyBinding spacecadetmap[] = {
     {Key_LeftShift, Key_LeftParen, 250},
     {Key_RightShift, Key_RightParen, 250},
+    {Key_LeftGui, Key_Tab, 250},
     SPACECADET_MAP_END
   };
   //Set the map.
