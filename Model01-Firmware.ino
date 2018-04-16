@@ -138,14 +138,14 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
    M(MACRO_STAR_PIPE), Key_Q,     Key_P,         Key_Y,         Key_C, Key_B,     Key_PageUp,
    LSHIFT(Key_Slash),  Key_A,     Key_N,         Key_I,         Key_S, Key_F,
    Key_LeftShift,      Key_Comma, Key_Period,    Key_J,         Key_G, Key_Quote, Key_LeftGui,
-   Key_LeftControl,    Key_E,     Key_Backspace, Key_Tab,
+   Key_LeftAlt,        Key_E,     Key_Backspace, Key_LeftControl,
    ShiftToLayer(FUNCTION),
 
    Key_RightBracket, Key_6,         Key_7,        Key_8,            Key_9,            Key_0, Key_Backtick,
    Key_PageDown,     Key_V,         Key_M,        Key_U,            Key_Z,            Key_L, Key_Slash,
                      Key_D,         Key_T,        Key_H,            Key_O,            Key_R, Key_Semicolon,
    Key_Insert,       LSHIFT(Key_1), Key_W,        Key_K,            Key_Minus,        Key_X, Key_RightShift,
-   Key_LeftAlt,      Key_Enter,     Key_Spacebar, Key_RightControl,
+   Key_RightControl,      Key_Enter,     Key_Spacebar, Key_LeftAlt,
    ShiftToLayer(FUNCTION)),
 
   [NUMPAD] =  KEYMAP_STACKED
@@ -173,9 +173,9 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
 
    ___,     Key_F6,        Key_F7,                   Key_F8,                   Key_F9,        Key_F10,      Key_F11,
    Key_End, ___,           Key_RightBracket,         Consumer_Mute,            ___,           ___,          Key_F12,
-            ___,           ___,                      Consumer_VolumeIncrement, ___,           ___,          Key_PrintScreen,
+            ___,           Key_Tab,                  Consumer_VolumeIncrement, ___,           ___,          Key_PrintScreen,
    ___,     ___,           LSHIFT(Key_RightBracket), Consumer_VolumeDecrement, ___,           ___,          ___,
-   ___,     ___,           ___,                      ___,
+   Key_LeftAlt, ___,           ___,                      ___,
    ___)
 
 };
@@ -440,6 +440,7 @@ void setup() {
   static kaleidoscope::SpaceCadet::KeyBinding spacecadetmap[] = {
     {Key_LeftShift, Key_LeftParen, 250},
     {Key_RightShift, Key_RightParen, 250},
+    {Key_LeftControl, Key_Tab, 250},
     SPACECADET_MAP_END
   };
   //Set the map.
