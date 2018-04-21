@@ -144,7 +144,7 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
    Key_RightBracket, Key_6,         Key_7,        Key_8,            Key_9,            Key_0, Key_Backtick,
    Key_PageDown,     Key_V,         Key_M,        Key_U,            Key_Z,            Key_L, Key_Slash,
                      Key_D,         Key_T,        Key_H,            Key_O,            Key_R, Key_Semicolon,
-   Key_Insert,       LSHIFT(Key_1), Key_W,        Key_K,            Key_Minus,        Key_X, Key_RightShift,
+   Key_LeftAlt,      LSHIFT(Key_1), Key_W,        Key_K,            Key_Minus,        Key_X, Key_RightShift,
    Key_RightControl,      Key_Enter,     Key_Spacebar, Key_LeftAlt,
    ShiftToLayer(FUNCTION)),
 
