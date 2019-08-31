@@ -338,77 +338,74 @@ static kaleidoscope::LEDSolidColor solidIndigo(0, 0, 170);
 static kaleidoscope::LEDSolidColor solidViolet(130, 0, 120);
 
 
-
-/** The 'setup' function is one of the two standard Arduino sketch functions.
-    It's called when your keyboard first powers up. This is where you set up
-    Kaleidoscope and any plugins.
-*/
-
-void setup() {
-  // First, call Kaleidoscope's internal setup function
-  Kaleidoscope.setup();
-
-  // Next, tell Kaleidoscope which plugins you want to use.
+  // Tell Kaleidoscope which plugins you want to use.
   // The order can be important. For example, LED effects are
   // added in the order they're listed here.
-  Kaleidoscope.use(
+KALEIDOSCOPE_INIT_PLUGINS(
 
-    &ShapeShifter,
-    &SpaceCadet,
-
+    ShapeShifter,
+    SpaceCadet,
 
     // The boot greeting effect pulses the LED button for 10 seconds after the keyboard is first connected
-    &BootGreetingEffect,
+    BootGreetingEffect,
 
     // The hardware test mode, which can be invoked by tapping Prog, LED and the left Fn button at the same time.
   //  &TestMode,
 
     // LEDControl provides support for other LED modes
-    &LEDControl,
+    LEDControl,
 
     // The rainbow effect changes the color of all of the keyboard's keys at the same time
     // running through all the colors of the rainbow.
-    &LEDRainbowEffect,
+    LEDRainbowEffect,
 
     // We don't start with the LED effect that turns off all the LEDs because Fitz likes the Rainbow :)
-    &LEDOff,
+    LEDOff,
 
     // The rainbow wave effect lights up your keyboard with all the colors of a rainbow
     // and slowly moves the rainbow across your keyboard
-    &LEDRainbowWaveEffect,
+    LEDRainbowWaveEffect,
 
     // The chase effect follows the adventure of a blue pixel which chases a red pixel across
     // your keyboard. Spoiler: the blue pixel never catches the red pixel
-    &LEDChaseEffect,
+    LEDChaseEffect,
 
     // These static effects turn your keyboard's LEDs a variety of colors
-    &solidRed, &solidOrange, &solidYellow, &solidGreen, &solidBlue, &solidIndigo, &solidViolet,
+    solidRed, solidOrange, solidYellow, solidGreen, solidBlue, solidIndigo, solidViolet,
 
     // The breathe effect slowly pulses all of the LEDs on your keyboard
-    &LEDBreatheEffect,
+    LEDBreatheEffect,
 
     // The AlphaSquare effect prints each character you type, using your
     // keyboard's LEDs as a display
-    &AlphaSquareEffect,
+    AlphaSquareEffect,
 
     // The stalker effect lights up the keys you've pressed recently
-    &StalkerEffect,
+    StalkerEffect,
 
     // The numpad plugin is responsible for lighting up the 'numpad' mode
     // with a custom LED effect
-    &NumPad,
+    NumPad,
 
     // The macros plugin adds support for macros
-    &Macros,
+    Macros,
 
     // The HostPowerManagement plugin enables waking up the host from suspend,
     // and allows us to turn LEDs off when it goes to sleep.
-    &HostPowerManagement,
+    HostPowerManagement,
 
     // The MouseKeys plugin lets you add keys to your keymap which move the mouse.
-    &MouseKeys
+    MouseKeys 
 
   );
+
+/** The 'setup' function is one of the two standard Arduino sketch functions.
+    It's called when your keyboard first powers up. This is where you set up
+    Kaleidoscope and any plugins.
+*/
+void setup() {
+  // First, call Kaleidoscope's internal setup function
+  Kaleidoscope.setup();
 
   // While we hope to improve this in the future, the NumPad plugin
   // needs to be explicitly told which keymap layer is your numpad layer
@@ -438,8 +435,9 @@ void setup() {
   //Setting is {KeyThatWasPressed, AlternativeKeyToSend, TimeoutInMS}
   //Note: must end with the SPACECADET_MAP_END delimiter
   static kaleidoscope::SpaceCadet::KeyBinding spacecadetmap[] = {
-    {Key_LeftShift, Key_LeftParen, 250},
-    {Key_RightShift, Key_RightParen, 250},
+    // Disable these temporarily as they're causing weird behaviors
+    //   {Key_LeftShift, Key_LeftParen, 250},
+    //   {Key_RightShift, Key_RightParen, 250},
     {Key_LeftControl, Key_Tab, 250},
     SPACECADET_MAP_END
   };
