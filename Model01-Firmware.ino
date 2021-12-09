@@ -32,7 +32,7 @@
 #include "Kaleidoscope-NumPad.h"
 
 // Support for an "LED off mode"
-#include "LED-Off.h"
+//#include "LED-Off.h"
 
 // Support for the "Boot greeting" effect, which pulses the 'LED' button for 10s
 // when the keyboard is connected to a computer (or that computer is powered on)
@@ -131,8 +131,9 @@ enum { MALTRON, NUMPAD, FUNCTION }; // layers
 */
 // *INDENT-OFF*
 
-const Key keymaps[][ROWS][COLS] PROGMEM = {
-
+//const Key keymaps[][ROWS][COLS] PROGMEM = {
+KEYMAPS(
+  
   [MALTRON] = KEYMAP_STACKED
   (Key_Escape,         Key_1,     Key_2,         Key_3,         Key_4, Key_5,     Key_LeftBracket,
    M(MACRO_STAR_PIPE), Key_Q,     Key_P,         Key_Y,         Key_C, Key_B,     Key_PageUp,
@@ -178,8 +179,8 @@ const Key keymaps[][ROWS][COLS] PROGMEM = {
    Key_LeftAlt, ___,           ___,                      ___,
    ___)
 
-};
-
+//};
+)
 /*
 Key_KeypadExclamationPoint
 Consumer_VolumeDecrement
@@ -187,7 +188,7 @@ Consumer_Mute
 Key_KeypadGreaterThan
 */
 
-static const kaleidoscope::ShapeShifter::dictionary_t shape_shift_dictionary[] PROGMEM = {
+static const kaleidoscope::plugin::ShapeShifter::dictionary_t shape_shift_dictionary[] PROGMEM = {
    // Adapt shifted numbers to Malt L98 layout
    {Key_1, Key_Equals},
    {Key_2, Key_6},
@@ -201,27 +202,23 @@ static const kaleidoscope::ShapeShifter::dictionary_t shape_shift_dictionary[] P
    {Key_NoKey, Key_NoKey},
 };
 
+
 /** toggleLedsOnSuspendResume toggles the LEDs off when the host goes to sleep,
  * and turns them back on when it wakes up.
  */
-void toggleLedsOnSuspendResume(kaleidoscope::HostPowerManagement::Event event) {
+void toggleLedsOnSuspendResume(kaleidoscope::plugin::HostPowerManagement::Event event) {
   switch (event) {
-  case kaleidoscope::HostPowerManagement::Suspend:
-    LEDControl.paused = true;
-    LEDControl.set_all_leds_to({0, 0, 0});
-    LEDControl.syncLeds();
+  case kaleidoscope::plugin::HostPowerManagement::Suspend:
+    LEDControl.disable();
     break;
-  case kaleidoscope::HostPowerManagement::Resume:
-    LEDControl.paused = false;
-    LEDControl.refreshAll();
+  case kaleidoscope::plugin::HostPowerManagement::Resume:
+    LEDControl.enable();
     break;
-  case kaleidoscope::HostPowerManagement::Sleep:
-    LEDControl.paused = true;
-    LEDControl.set_all_leds_to({0, 0, 0});
-    LEDControl.syncLeds();
+  case kaleidoscope::plugin::HostPowerManagement::Sleep:
     break;
   }
 }
+
 
 /** hostPowerManagementEventHandler dispatches power management events (suspend,
  * resume, and sleep) to other functions that perform action based on these
@@ -257,10 +254,10 @@ static void versionInfoMacro(uint8_t keyState) {
 static void anyKeyMacro(uint8_t keyState) {
   static Key lastKey;
   if (keyToggledOn(keyState))
-    lastKey.keyCode = Key_A.keyCode + (uint8_t)(millis() % 36);
+    lastKey.setKeyCode(Key_A.getKeyCode() + (uint8_t)(millis() % 36));
 
   if (keyIsPressed(keyState))
-    kaleidoscope::hid::pressKey(lastKey);
+    Kaleidoscope.hid().keyboard().pressKey(lastKey);
 }
 
 /** Provide a key that types [*] when not shifted and [|] when shifted. Keys repeat
@@ -268,21 +265,21 @@ static void anyKeyMacro(uint8_t keyState) {
 */
 static void starPipeMacro(uint8_t keyState) {
   static Key lastKey;
-  bool isShifted = kaleidoscope::hid::wasModifierKeyActive(Key_LeftShift)
-         || kaleidoscope::hid::wasModifierKeyActive(Key_RightShift);
+  bool isShifted = Kaleidoscope.hid().keyboard().wasModifierKeyActive(Key_LeftShift)
+         || Kaleidoscope.hid().keyboard().wasModifierKeyActive(Key_RightShift);
 
   if (keyToggledOn(keyState)) {
     if (isShifted) {
-      lastKey.keyCode = Key_Backslash.keyCode;
+      lastKey.setKeyCode(Key_Backslash.getKeyCode());
     }
     else {
-      lastKey.keyCode = Key_8.keyCode;
-      lastKey.flags = lastKey.flags | SHIFT_HELD;
+      lastKey.setKeyCode(Key_8.getKeyCode());
+      lastKey.setFlags(lastKey.getFlags() | SHIFT_HELD);
     }
   }
 
   if (keyIsPressed(keyState))
-    kaleidoscope::hid::pressKey(lastKey);
+    Kaleidoscope.hid().keyboard().pressKey(lastKey);
 }
 
 /** macroAction dispatches keymap events that are tied to a macro
@@ -329,13 +326,13 @@ const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState) {
 // Keyboardio Model 01.
 
 
-static kaleidoscope::LEDSolidColor solidRed(160, 0, 0);
-static kaleidoscope::LEDSolidColor solidOrange(140, 70, 0);
-static kaleidoscope::LEDSolidColor solidYellow(130, 100, 0);
-static kaleidoscope::LEDSolidColor solidGreen(0, 160, 0);
-static kaleidoscope::LEDSolidColor solidBlue(0, 70, 130);
-static kaleidoscope::LEDSolidColor solidIndigo(0, 0, 170);
-static kaleidoscope::LEDSolidColor solidViolet(130, 0, 120);
+static kaleidoscope::plugin::LEDSolidColor solidRed(160, 0, 0);
+static kaleidoscope::plugin::LEDSolidColor solidOrange(140, 70, 0);
+static kaleidoscope::plugin::LEDSolidColor solidYellow(130, 100, 0);
+static kaleidoscope::plugin::LEDSolidColor solidGreen(0, 160, 0);
+static kaleidoscope::plugin::LEDSolidColor solidBlue(0, 70, 130);
+static kaleidoscope::plugin::LEDSolidColor solidIndigo(0, 0, 170);
+static kaleidoscope::plugin::LEDSolidColor solidViolet(130, 0, 120);
 
 
   // Tell Kaleidoscope which plugins you want to use.
@@ -434,7 +431,7 @@ void setup() {
   //Set the keymap with a 250ms timeout per-key
   //Setting is {KeyThatWasPressed, AlternativeKeyToSend, TimeoutInMS}
   //Note: must end with the SPACECADET_MAP_END delimiter
-  static kaleidoscope::SpaceCadet::KeyBinding spacecadetmap[] = {
+  static kaleidoscope::plugin::SpaceCadet::KeyBinding spacecadetmap[] = {
     // Disable these temporarily as they're causing weird behaviors
     //   {Key_LeftShift, Key_LeftParen, 250},
     //   {Key_RightShift, Key_RightParen, 250},
