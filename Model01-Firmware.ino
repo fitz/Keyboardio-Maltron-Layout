@@ -62,6 +62,9 @@
 // Support for host power management (suspend & wakeup)
 #include "Kaleidoscope-HostPowerManagement.h"
 
+// For any key where the shifted QWERTY key does not correspond directly to the unshifted QWERTY key
+#include "Kaleidoscope-CharShift.h"
+
 /** This 'enum' is a list of all the macros used by the Model 01's firmware
     The names aren't particularly important. What is important is that each
     is unique.
@@ -76,9 +79,6 @@
 */
 
 enum { MACRO_VERSION_INFO,
-       MACRO_BACKSLASH,
-       MACRO_EQUALS,
-       MACRO_STAR_PIPE,
        MACRO_ANY
      };
 
@@ -126,6 +126,14 @@ enum { MACRO_VERSION_INFO,
 
 enum { MALTRON, NUMPAD, FUNCTION }; // layers
 
+/**
+     These are keys that are configured using CharShift (at the bottom of setup()) to make the keymaps more readable
+ */
+enum CS_KEYS {STAR_PIPE,
+              ZERO_EQUALS,
+              SLASH_BACKSLASH
+};
+
 /* This comment temporarily turns off astyle's indent enforcement
      so we can make the keymaps actually resemble the physical key layout better
 */
@@ -136,14 +144,14 @@ KEYMAPS(
   
   [MALTRON] = KEYMAP_STACKED
   (Key_Escape,         Key_1,     Key_2,         Key_3,         Key_4, Key_5,     Key_LeftBracket,
-   M(MACRO_STAR_PIPE), Key_Q,     Key_P,         Key_Y,         Key_C, Key_B,     Key_PageUp,
+   CS(STAR_PIPE),      Key_Q,     Key_P,         Key_Y,         Key_C, Key_B,     Key_PageUp,
    LSHIFT(Key_Slash),  Key_A,     Key_N,         Key_I,         Key_S, Key_F,
    Key_LeftShift,      Key_Comma, Key_Period,    Key_J,         Key_G, Key_Quote, Key_LeftGui,
    Key_LeftAlt,        Key_E,     Key_Backspace, Key_LeftControl,
    ShiftToLayer(FUNCTION),
 
-   Key_RightBracket, Key_6,         Key_7,        Key_8,            Key_9,            Key_0, Key_Backtick,
-   Key_PageDown,     Key_V,         Key_M,        Key_U,            Key_Z,            Key_L, Key_Slash,
+   Key_RightBracket, Key_6,         Key_7,        Key_8,            Key_9,            CS(ZERO_EQUALS), Key_Backtick,
+   Key_PageDown,     Key_V,         Key_M,        Key_U,            Key_Z,            Key_L, CS(SLASH_BACKSLASH),
                      Key_D,         Key_T,        Key_H,            Key_O,            Key_R, Key_Semicolon,
    Key_LeftAlt,      LSHIFT(Key_1), Key_W,        Key_K,            Key_Minus,        Key_X, Key_RightShift,
    Key_RightControl,      Key_Enter,     Key_Spacebar, Key_LeftAlt,
@@ -196,9 +204,7 @@ static const kaleidoscope::plugin::ShapeShifter::dictionary_t shape_shift_dictio
    {Key_6, Key_0},
    {Key_8, Key_2},
    {Key_9, Key_5},
-   {Key_0, M(MACRO_EQUALS)},
 
-   {Key_Slash, M(MACRO_BACKSLASH)},
    {Key_NoKey, Key_NoKey},
 };
 
@@ -260,6 +266,7 @@ static void anyKeyMacro(uint8_t keyState) {
     Kaleidoscope.hid().keyboard().pressKey(lastKey);
 }
 
+// TODO delete this
 /** Provide a key that types [*] when not shifted and [|] when shifted. Keys repeat
     correctly when held.
 */
@@ -305,16 +312,6 @@ const macro_t *macroAction(uint8_t macroIndex, uint8_t keyState) {
       anyKeyMacro(keyState);
       break;
 
-    case MACRO_EQUALS:
-      return MACRODOWN(I(10), U(LeftShift), U(RightShift), T(Equals));
-
-    case MACRO_STAR_PIPE:
-      starPipeMacro(keyState);
-      break;
-
-    case MACRO_BACKSLASH:
-      return MACRODOWN(I(10), U(LeftShift), U(RightShift), T(Backslash));
-
   }
 
   return MACRO_NONE;
@@ -333,6 +330,7 @@ static kaleidoscope::plugin::LEDSolidColor solidGreen(0, 160, 0);
 static kaleidoscope::plugin::LEDSolidColor solidBlue(0, 70, 130);
 static kaleidoscope::plugin::LEDSolidColor solidIndigo(0, 0, 170);
 static kaleidoscope::plugin::LEDSolidColor solidViolet(130, 0, 120);
+
 
 
   // Tell Kaleidoscope which plugins you want to use.
@@ -392,8 +390,10 @@ KALEIDOSCOPE_INIT_PLUGINS(
     HostPowerManagement,
 
     // The MouseKeys plugin lets you add keys to your keymap which move the mouse.
-    MouseKeys 
+    MouseKeys,
 
+    // The Malt layout has a number of shifted keys that don't correspond to the unshifted QWERTY key
+    CharShift
   );
 
 /** The 'setup' function is one of the two standard Arduino sketch functions.
@@ -440,7 +440,15 @@ void setup() {
   };
   //Set the map.
   SpaceCadet.map = spacecadetmap;
-  
+
+
+  CS_KEYS(
+    kaleidoscope::plugin::CharShift::KeyPair(LSHIFT(Key_8), LSHIFT(Key_Backslash)), // `*`\`|`
+    kaleidoscope::plugin::CharShift::KeyPair(Key_0, Key_Equals),                    // `0`\`=`
+    kaleidoscope::plugin::CharShift::KeyPair(Key_Slash, Key_Backslash)              // `/`\`\`
+
+  );
+
 }
 
 /** loop is the second of the standard Arduino sketch functions.
