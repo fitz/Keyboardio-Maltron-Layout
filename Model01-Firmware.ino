@@ -290,9 +290,6 @@ void setup() {
 
 /** loop is the second of the standard Arduino sketch functions.
     As you might expect, it runs in a loop, never exiting.
-
-    For Kaleidoscope-based keyboard firmware, you usually just want to
-    call Kaleidoscope.loop(); and not do anything custom here.
 */
 void loop() {
   Kaleidoscope.loop();
