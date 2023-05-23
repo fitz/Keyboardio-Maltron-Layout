@@ -21,7 +21,7 @@
 #include "Kaleidoscope-LEDEffect-Rainbow.h"
 #include "Kaleidoscope-LED-Stalker.h"
 #include "Kaleidoscope-LED-AlphaSquare.h"
-#include "Kaleidoscope-Model01-TestMode.h"
+// #include "Kaleidoscope-Model01-TestMode.h"
 #include "Kaleidoscope-HostPowerManagement.h"
 // For any key where the shifted QWERTY key does not correspond directly to the unshifted QWERTY key
 #include "Kaleidoscope-CharShift.h"
@@ -33,18 +33,18 @@ enum { MALTRON, NUMPAD, FUNCTION }; // layers
 
 /**
      These are keys that are configured using CharShift (at the bottom of setup()) to make the keymaps more readable
- */
+*/
 enum CS_KEYS {STAR_PIPE,
               ZERO_EQUALS,
               SLASH_BACKSLASH
-};
+             };
 
 /* This comment temporarily turns off astyle's indent enforcement
      so we can make the keymaps actually resemble the physical key layout better
 */
 // *INDENT-OFF*
 KEYMAPS(
-  
+
   [MALTRON] = KEYMAP_STACKED
   (Key_Escape,         Key_1,     Key_2,         Key_3,         Key_4, Key_5,     Key_LeftBracket,
    CS(STAR_PIPE),      Key_Q,     Key_P,         Key_Y,         Key_C, Key_B,     Key_PageUp,
@@ -170,68 +170,68 @@ static kaleidoscope::plugin::LEDSolidColor solidIndigo(0, 0, 170);
 static kaleidoscope::plugin::LEDSolidColor solidViolet(130, 0, 120);
 
 
-  // Tell Kaleidoscope which plugins you want to use.
-  // The order can be important. For example, LED effects are
-  // added in the order they're listed here.
+// Tell Kaleidoscope which plugins you want to use.
+// The order can be important. For example, LED effects are
+// added in the order they're listed here.
 KALEIDOSCOPE_INIT_PLUGINS(
 
-    ShapeShifter,
-    SpaceCadet,
+  ShapeShifter,
+  SpaceCadet,
 
-    // The boot greeting effect pulses the LED button for 10 seconds after the keyboard is first connected
-    BootGreetingEffect,
+  // The boot greeting effect pulses the LED button for 10 seconds after the keyboard is first connected
+  BootGreetingEffect,
 
-    // The hardware test mode, which can be invoked by tapping Prog, LED and the left Fn button at the same time.
+  // The hardware test mode, which can be invoked by tapping Prog, LED and the left Fn button at the same time.
   //  &TestMode,
 
-    // LEDControl provides support for other LED modes
-    LEDControl,
+  // LEDControl provides support for other LED modes
+  LEDControl,
 
-    // The rainbow effect changes the color of all of the keyboard's keys at the same time
-    // running through all the colors of the rainbow.
-    LEDRainbowEffect,
+  // The rainbow effect changes the color of all of the keyboard's keys at the same time
+  // running through all the colors of the rainbow.
+  LEDRainbowEffect,
 
-    // We don't start with the LED effect that turns off all the LEDs because Fitz likes the Rainbow :)
-    LEDOff,
+  // We don't start with the LED effect that turns off all the LEDs because Fitz likes the Rainbow :)
+  LEDOff,
 
-    // The rainbow wave effect lights up your keyboard with all the colors of a rainbow
-    // and slowly moves the rainbow across your keyboard
-    LEDRainbowWaveEffect,
+  // The rainbow wave effect lights up your keyboard with all the colors of a rainbow
+  // and slowly moves the rainbow across your keyboard
+  LEDRainbowWaveEffect,
 
-    // The chase effect follows the adventure of a blue pixel which chases a red pixel across
-    // your keyboard. Spoiler: the blue pixel never catches the red pixel
-    LEDChaseEffect,
+  // The chase effect follows the adventure of a blue pixel which chases a red pixel across
+  // your keyboard. Spoiler: the blue pixel never catches the red pixel
+  LEDChaseEffect,
 
-    // These static effects turn your keyboard's LEDs a variety of colors
-    solidRed, solidOrange, solidYellow, solidGreen, solidBlue, solidIndigo, solidViolet,
+  // These static effects turn your keyboard's LEDs a variety of colors
+  solidRed, solidOrange, solidYellow, solidGreen, solidBlue, solidIndigo, solidViolet,
 
-    // The breathe effect slowly pulses all of the LEDs on your keyboard
-    LEDBreatheEffect,
+  // The breathe effect slowly pulses all of the LEDs on your keyboard
+  LEDBreatheEffect,
 
-    // The AlphaSquare effect prints each character you type, using your
-    // keyboard's LEDs as a display
-    AlphaSquareEffect,
+  // The AlphaSquare effect prints each character you type, using your
+  // keyboard's LEDs as a display
+  AlphaSquareEffect,
 
-    // The stalker effect lights up the keys you've pressed recently
-    StalkerEffect,
+  // The stalker effect lights up the keys you've pressed recently
+  StalkerEffect,
 
-    // The numpad plugin is responsible for lighting up the 'numpad' mode
-    // with a custom LED effect
-    NumPad,
+  // The numpad plugin is responsible for lighting up the 'numpad' mode
+  // with a custom LED effect
+  NumPad,
 
-    // The macros plugin adds support for macros
-    Macros,
+  // The macros plugin adds support for macros
+  Macros,
 
-    // The HostPowerManagement plugin enables waking up the host from suspend,
-    // and allows us to turn LEDs off when it goes to sleep.
-    HostPowerManagement,
+  // The HostPowerManagement plugin enables waking up the host from suspend,
+  // and allows us to turn LEDs off when it goes to sleep.
+  HostPowerManagement,
 
-    // The MouseKeys plugin lets you add keys to your keymap which move the mouse.
-    MouseKeys,
+  // The MouseKeys plugin lets you add keys to your keymap which move the mouse.
+  MouseKeys,
 
-    // The Malt layout has a number of shifted keys that don't correspond to the unshifted QWERTY key
-    CharShift
-  );
+  // The Malt layout has a number of shifted keys that don't correspond to the unshifted QWERTY key
+  CharShift
+);
 
 /** The 'setup' function is one of the two standard Arduino sketch functions.
     It's called when your keyboard first powers up. This is where you set up
@@ -276,7 +276,7 @@ void setup() {
     SPACECADET_MAP_END
   };
   //Set the map.
-  SpaceCadet.map = spacecadetmap;
+  SpaceCadet.setMap(spacecadetmap);
 
 
   CS_KEYS(
